@@ -77,8 +77,10 @@ Local Development
    docker-compose -d up
 
 This will create a docker image docker-postgres-java-refactoring:latest 
-And 2 containers one for app and another for postres
+And 2 containers one for app and another for postgres 13
 
 you can verify they are running via cnd docker ps
 
-4. Now go to http://localhost:8080/v1/users
+4. Now go to http://localhost:8080/v1/users - you wil get a list of 10 users already initialized
+5. You can use Insomnium to test all endpoint as i haven't integrated with swagger.
+I have attached the collection in file InsomniumCollections.json

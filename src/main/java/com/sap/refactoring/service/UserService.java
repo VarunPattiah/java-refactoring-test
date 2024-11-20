@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 @Transactional
@@ -18,6 +20,7 @@ import java.util.Locale;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final Lock lock = new ReentrantLock();
 
     public List<UserInfo> getUsers() {
         log.info("UserService: fetching all Users");
@@ -48,16 +51,22 @@ public class UserService {
     }
 
     public UserInfo updateUser(UserInfo user) {
-       boolean isExist =  this.userRepository.existsById(user.getUserId());
-        log.info("UserService: updateUser -> Did user exist: {}", isExist);
+        lock.lock();
+        try {
+            boolean isExist =  this.userRepository.existsById(user.getUserId());
+            log.info("UserService: updateUser -> Did user exist: {}", isExist);
 
-       if (isExist) {
-           String email = user.getEmail();
-           validateEmail(email);
-           user.setEmail(email.toLowerCase(Locale.ENGLISH));
-           this.userRepository.save(user);
-           return user;
-       }
+            if (isExist) {
+                String email = user.getEmail();
+                validateEmail(email);
+                user.setEmail(email.toLowerCase(Locale.ENGLISH));
+                this.userRepository.save(user);
+                return user;
+            }
+
+        } finally {
+            lock.unlock();
+        }
 
        return null;
     }
