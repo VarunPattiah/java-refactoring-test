@@ -84,3 +84,20 @@ you can verify they are running via cnd docker ps
 4. Now go to http://localhost:8080/v1/users - you wil get a list of 10 users already initialized
 5. You can use Insomnium to test all endpoint as i haven't integrated with swagger.
 I have attached the collection in file InsomniumCollections.json
+
+About Service
+-----------------
+
+Its a Spring boot Restful webservice which perform CRUD operation on Users. It manages user and their roles.
+We used docker and docker compose to manage this app and postres in seperate container. We use init.sql to create tables with some data.
+We handle concurrency for Update user.
+Integration and unit tests
+
+User payload
+
+![img.png](img.png)
+
+Business usecase
+Email should be unique
+User name and atleast one role is provided
+UserId is not required as long as they want ti update existing user
