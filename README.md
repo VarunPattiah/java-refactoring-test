@@ -66,3 +66,19 @@ If this exercise is too easy, additional points will be given for the following:
 * Implement DB initialisation using either Flyway or Liquibase
 
 Good luck!
+
+
+Local Development
+-----------------
+
+1. clone the repository
+2. generate the jar file via gradle CMD: ./gradlew build
+3. run docker compose from root directory 
+   docker-compose -d up
+
+This will create a docker image docker-postgres-java-refactoring:latest 
+And 2 containers one for app and another for postres
+
+you can verify they are running via cnd docker ps
+
+4. Now go to http://localhost:8080/v1/users
