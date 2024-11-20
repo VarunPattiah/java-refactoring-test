@@ -17,9 +17,13 @@ services:
       - "8080:8080"
 
   db:
-    image: 'postgres'
+    image: 'postgres:13'
     container_name: db
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=dockerdb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
